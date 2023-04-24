@@ -1,14 +1,18 @@
 var container = document.getElementById('container');
 var button_Container = document.getElementById('button_Container');
 let grid_Size = 16*16;
-let scale = 30
+//16x16 - 32x32 - 64x64 - 128x128   
+let scale = 30;
 
+//ecuation scale - grid size
+// 30x = 16*16 && 30x/4 = 64*64 
+console.log(scale/Math.sqrt(scale))
 //align grid in the middle 
 container.style.display = 'flex';
 container.style.justifyContent = 'center';
 container.style.alignItems = 'center';
 
-//algin button in the middle
+//align button in the middle
 button_Container.style.display = 'flex';
 button_Container.style.justifyContent = 'center';
 button_Container.style.alignItems = 'center';
@@ -57,36 +61,26 @@ function gridDeleter()
 }
 
 //button clear
-
     var button_Clear = document.createElement('button');
     var buttonText_Clear = document.createTextNode('CLEAR');
     button_Container.appendChild(button_Clear)
     button_Clear.appendChild(buttonText_Clear);
 
-//button 64x64
-    
-    var button_64 = document.createElement('button');
-    var buttonText_64 = document.createTextNode('64X64');
-    button_Container.appendChild(button_64)
-    button_64.appendChild(buttonText_64);
-    button_64.addEventListener('click',() => gridDeleter());
-    button_64.addEventListener('click',() => scale= 30/4);
-    button_64.addEventListener('click',() => grid_Size=64*64);
-    button_64.addEventListener('click',() => gridCreation());
-    
-   
-    
-//button 16x16
+    //button slider
+    var slider = document.getElementById('myRange');
+    var output = document.getElementById('demo');
+    output.innerHTML = slider.value;
+    slider.oninput = function() {
+    output.innerHTML = this.value;
+    //grid
+    gridDeleter();
+    grid_Size=Math.pow(slider.value,2);
+    scale= 30/(Math.sqrt(grid_Size)/16);
+    gridCreation();
+    }
 
-    var button_16 = document.createElement('button');
-    var buttonText_16 = document.createTextNode('16X16');
-    button_Container.appendChild(button_16)
-    button_16.appendChild(buttonText_16);
-    button_16.addEventListener('click',() => gridDeleter());
-    button_16.addEventListener('click',() => scale= 30);
-    button_16.addEventListener('click',() => grid_Size=16*16);
-    button_16.addEventListener('click',() => gridCreation());
-    
-    
+
+
+
 //grid
 gridCreation();
